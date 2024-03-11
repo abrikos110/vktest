@@ -1,0 +1,1 @@
+/data/data/com.termux/files/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/vk_test.dir/src/main.cpp.o CMakeFiles/vk_test.dir/src/bmp.cpp.o -o /data/data/com.termux/files/home/vktest/bin/vk_test  -lpthread 

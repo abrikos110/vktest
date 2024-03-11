@@ -1,0 +1,3 @@
+/data/data/com.termux/files/home/vktest/build/CMakeFiles/vk_test.dir
+/data/data/com.termux/files/home/vktest/build/CMakeFiles/edit_cache.dir
+/data/data/com.termux/files/home/vktest/build/CMakeFiles/rebuild_cache.dir
