@@ -3,12 +3,13 @@
 #error WAT
 #endif
 
+#include <vector>
+#include <cassert>
+#include <iostream>
+
 #include "bmp.h"
 #include "some_utils.h"
-
-float cross(flt2 x, flt2 y) {
-    return x.a * y.b - x.b * y.a;
-}
+#include "sdf.h"
 
 bool in_triangle(flt2 x, flt2 a, flt2 b, flt2 c) {
     return cross(x - a, b - a) > 0
@@ -16,15 +17,38 @@ bool in_triangle(flt2 x, flt2 a, flt2 b, flt2 c) {
         && cross(x - c, a - c) > 0;
 }
 
-int main() {
-    const int w = 256, h = 256;
-    unsigned img[w*h] = {0};
-    for (unsigned i = 0; i < w; ++i) {
-        for (unsigned j = 0; j < h; ++j) {
-            img[i*h + j] = rgb(flt4{i * 1.f / w, j * 1.f / h, 0.5})
-                * in_triangle({1.f*i,1.f*j}, {20, 20}, {40,200}, {300,300});
+struct scene {
+    unsigned w, h;
+    std::vector<unsigned> image;
+
+    scene(unsigned w, unsigned h) : w(w), h(h), image(w * h) {}
+
+    flt4 calc_pixel(int i, int j) {
+        flt4 ans{(i + 1.f) / w, (1.f + j) / h, 0.5};
+        assert(ans.a * w > i);
+        return in_triangle({1.f * i, 1.f * j}, {20,20}, {40,200}, {222,222})
+            ? ans : flt4(1., 0.1, 0.0);
+    }
+
+    void render() {
+        for (unsigned i = 0; i < w; ++i) {
+            for (unsigned j = 0; j < h; ++j) {
+                image[i*h + j] = rgb(calc_pixel(i, j));
+                assert(image[i*h + j] > 0);
+            }
         }
     }
-    SaveBMP("answer.bmp", (unsigned *)(void *)img, w, h);
+
+    void save_bmp(const char *fname) {
+        SaveBMP(fname, image.data(), w, h);
+    }
+};
+
+int main() {
+    scene S(256, 256);
+    S.render();
+    S.save_bmp("answer.bmp");
+
+    std::cout << "Done!" << std::endl;
     return 0;
 }
