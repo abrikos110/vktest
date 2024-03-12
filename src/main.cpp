@@ -25,8 +25,14 @@ struct flt4 {
 unsigned rgb(uc r, uc g, uc b) {
     return r | (g << 8) | (b << 16);
 }
+float clip(float x, float a = 0, float b = 1) {
+    if (x < a) return a;
+    if (x > b) return b;
+    return x;
+}
 unsigned rgb(flt4 c) {
-    return rgb(uc(c.a * 255), uc(c.b * 255), uc(c.c * 255));
+    return rgb(clip(uc(c.a * 255)),
+        clip(uc(c.b * 255)), clip(uc(c.c * 255)));
 }
 
 float cross(flt2 x, flt2 y) {
