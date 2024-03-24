@@ -6,7 +6,7 @@ typedef unsigned char uc;
 struct flt2 {
     float a, b;
     flt2(float a, float b) : a(a), b(b) {}
-    flt2(float z) : a(z), b(z) {}
+    flt2(float z = 0.f) : a(z), b(z) {}
     flt2 operator+(const flt2 &o) const { return {a + o.a, b + o.b}; }
     flt2 operator-(const flt2 &o) const { return {a - o.a, b - o.b}; }
     flt2 operator*(const flt2 &o) const { return {a * o.a, b * o.b}; }
@@ -24,7 +24,7 @@ float dot(const flt2 &x, const flt2 &y) {
 struct flt4 {
     float a, b, c, d;
     flt4(float a, float b, float c, float d = 0.f) : a(a), b(b), c(c), d(d) {}
-    flt4(float z) : a(z), b(z), c(z), d(z) {}
+    flt4(float z = 0.f) : a(z), b(z), c(z), d(z) {}
     flt4 operator+(const flt4 &o) const { return {a + o.a, b + o.b, c + o.c, d + o.d}; }
     flt4 operator-(const flt4 &o) const { return {a - o.a, b - o.b, c - o.c, d - o.d}; }
     flt4 operator*(const flt4 &o) const { return {a * o.a, b * o.b, c * o.c, d * o.d}; }

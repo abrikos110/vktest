@@ -30,12 +30,12 @@ struct scene {
         flt4 dir{0, 0, 1};
         vfov *= M_PI / 180;
         for (unsigned i = 0; i < w; ++i) {
-            for (unsigned j = 0; j < h; ++i) {
+            for (unsigned j = 0; j < h; ++j) {
                 flt4 r(i2x(i), j2y(j), 0);
                 float n = std::sqrt(dot(r, r));
-                r /= (n ? n : 1);
+                r = r / (n ? n : 1);
                 float angle = n * vfov / 2;
-                rays[i*h + j] = std::cos(angle) * dir + std::sin(angle) * r;
+                rays[i*h + j] = dir * std::cos(angle) + r * std::sin(angle);
             }
         } // TODO stupid_tracing
     }
